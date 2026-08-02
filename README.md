@@ -78,10 +78,12 @@ curl http://localhost:8081/api/visits
 
 | Run                              | Time      |
 |----------------------------------|-----------|
-| Cold build (`--build`)           | ~78.2s    |
-| Pre-built (images cached)        | ~13.0s    |
-| Difference                       | ~65.1s    |
-
+| Cold build (`--build`)           | ~121.3s   |
+| Pre-built (images cached)        | ~8.8s     |
+| Difference                       | ~112.4s   |
+121.3s
+  Pre-built time   : 8.8s
+  Time saved       : 112.4s
 ### Why the difference?
 - Cold build downloads base images (`node:20-alpine`, `nginx:alpine`), installs npm packages, and layers the filesystem — all done from scratch.
 - With pre-built images, Docker skips all of that. `docker compose up` only creates containers from the already-built images and starts them, which takes just a couple of seconds.
