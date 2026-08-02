@@ -1,0 +1,42 @@
+services:
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB:       appdb
+      POSTGRES_USER:     appuser
+      POSTGRES_PASSWORD: appsecret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  api:
+    build: ./api
+    expose:
+      - "3000"
+    environment:
+      DB_HOST:     db
+      DB_PORT:     5432
+      DB_NAME:     appdb
+      DB_USER:     appuser
+      DB_PASSWORD: appsecret
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8081:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  pgdata:

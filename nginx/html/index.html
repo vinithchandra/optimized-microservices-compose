@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nginx + Node + Postgres</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+    button { padding: 8px 16px; cursor: pointer; margin-right: 8px; }
+    pre { background: #f4f4f4; padding: 12px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Nginx + Node.js + PostgreSQL</h1>
+  <button onclick="recordVisit()">Record a Visit</button>
+  <button onclick="loadVisits()">Load Visits</button>
+  <pre id="output">Click a button...</pre>
+
+  <script>
+    async function recordVisit() {
+      const res = await fetch('/api/visits', { method: 'POST' });
+      const data = await res.json();
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    }
+    async function loadVisits() {
+      const res = await fetch('/api/visits');
+      const data = await res.json();
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
