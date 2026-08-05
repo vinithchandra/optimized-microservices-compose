@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "scripts": { "start": "node server.js" },
   "dependencies": {
-    "pg": "^8.11.0"
+    "pg": "^8.13.3"
+  },
+  "overrides": {
+    "tar": "^7.5.19",
+    "minimatch": "^10.2.3",
+    "sigstore": "^4.1.1",
+    "brace-expansion": "^2.1.4",
+    "cross-spawn": "^7.0.5",
+    "glob": "^10.5.0",
+    "ip-address": "^10.3.1"
   }
 }
